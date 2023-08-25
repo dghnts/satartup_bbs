@@ -1,0 +1,45 @@
+</html<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>簡易掲示板</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+
+    <main class="container">
+        <ul class="messages list-group">
+            {% for message in messages %}
+            <li {% if message.tags %} class="list-group-item {{ messages.tags }}"{% endif %}>
+                {{ message}}
+            </li>
+            {% endfor %}
+        </ul>
+    
+        {# ここが投稿用フォーム #}
+        <form method="POST">
+            {% csrf_token %}
+            <textarea class="form-control" name="comment" placeholder="ここに文章を入力してください"></textarea>
+            <input class="btn btn-outline-primary" type="submit" value="送信">
+        </form>
+
+
+        {# ここが投稿されたデータの表示領域 #}
+        {% for topic in topics %}
+        <div class="border">
+            {{ topic.comment }}
+        </div>
+        {% endfor %}
+        
+        {# 検索用フォームの作成 #}
+        <form action="" method="GET">
+            <div class="input-group">
+                <input class="form-control" type="text" name="search" placeholder="キーワード">
+                <div class="input-group-apend">
+                    <input class="btn btn-outline-primary" type="submit" value="検索">
+                </div>
+        </form>
+    </main>
+</body>
+</html>
