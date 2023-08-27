@@ -1,12 +1,24 @@
 from django import forms
-from .models import Album,Document
+from .models import PhotoList,DocumentList
 
-class AlbumForm(forms.ModelForm):
+class PhotoForm(forms.ModelForm):
     class Meta:
-        model = Album
+        model = PhotoList
         fields = ['photo']
+
+        error_messages = {
+            'photo' : {
+                'required' : "画像を選択してください",
+            }
+        }
 
 class DocumentForm(forms.ModelForm):
     class Meta:
-        model = Document
+        model = DocumentList
         fields = ['file']
+        
+        error_messages = {
+            'file' : {
+                'required' : "pdfファイルを選択してください",
+            }
+        }
