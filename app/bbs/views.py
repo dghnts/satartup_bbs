@@ -56,4 +56,14 @@ class BbsView(View):
             messages.info(request, "投稿内容を保存しました") 
         return redirect("bbs:bbs")
     
+class SingleView(View):
+    def get(self, request, pk, *args, **kwargs):
+        context = {}
+        
+        # pkを使って個別ページに表示するTopicを特定する
+        context["topic"] = Topic.objects.filter(id=pk).first()
+        
+        return render(request, "bbs/single.html", context)
+     
 bbs   = BbsView.as_view()
+single = SingleView.as_view()
