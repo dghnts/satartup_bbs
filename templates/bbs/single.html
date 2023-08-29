@@ -12,7 +12,14 @@
 
         {# ループせずにそのまま表示できる #}
         <div class=border>
-            {{ topic.comment }}
+            <div class="mb-2">
+                {{ topic.comment }}
+            </div>
+            <form class="mb-2" action="{% url 'bbs:delete' topic.id %}" method="POST">
+                {% csrf_token%}
+                <input class="btn btn-danger" type="submit" value="削除">
+            </form>
+            <a class="btn btn-success" href="{% url 'bbs:edit' topic.id %}">編集</a>
         </div>
     </main>
 </body>

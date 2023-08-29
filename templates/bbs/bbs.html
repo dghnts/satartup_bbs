@@ -1,16 +1,25 @@
+{% extends "common/l_sidebar.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>簡易掲示板</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'bbs/css/style.css' %}">
-</head>
-<body>
 
-    <main class="container">
+{% block extra_head %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+{% endblock %}
+
+{% block page_title %}簡易掲示板{% endblock %}
+{% block header_link %}{% url 'bbs:bbs' %}{% endblock %}
+{% block header_title %}簡易掲示板{% endblock %}
+
+<!-- ヘッダーの右側に表示させたいものを設定-->
+{% block header_right_content %}{% endblock %}
+
+<!-- 左サイドバーの中に入れたいものをかく-->
+{% block slidebar_content %}
+{% for topic in topics %}
+    <a href="{% url 'bbs/single' topic.id %}">{{ topic.id }}の個別ページ</a>
+{% endfor %}
+{% endblock %}
+
+{% block main %}
         <ul class="messages list-group">
             {% for message in messages %}
             <li {% if message.tags %} class="list-group-item {{ messages.tags }}"{% endif %}>
@@ -30,8 +39,28 @@
         {# ここが投稿されたデータの表示領域 #}
         {% for topic in topics %}
         <div class="topic">
-            {{ topic.comment }}
-            {{ topic.dt }}
+            <div>
+                id:{{ topic.id }}
+            </div>
+            <div >
+                コメント:{{ topic.comment }}
+            </div>
+            <div>
+                投稿日時：{{ topic.dt }}
+            </div>
+            <div>
+                投稿者名：{{ topic.name }}
+            </div>
+            
+            <!--
+            <form class="mb-2" action="{% url 'bbs:delete' topic.id %}" method="POST">
+                {% csrf_token %}
+                <input class="btn btn-danger" type="submit" value="削除">
+            </form>
+            <a class="btn btn-success" href="{% url 'bbs:edit' topic.id %}">編集</a>
+            -->
+            
+            <a class="mt-2 btn btn-primary" href="{% url 'bbs:single' topic.id %}">個別ページへ移動</a>
         </div>
         {% endfor %}
         
@@ -42,7 +71,6 @@
                 <div class="input-group-apend">
                     <input class="btn btn-outline-primary" type="submit" value="検索">
                 </div>
+            </div>
         </form>
-    </main>
-</body>
-</html>
+{% endblock %}

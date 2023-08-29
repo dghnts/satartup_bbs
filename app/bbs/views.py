@@ -64,6 +64,39 @@ class SingleView(View):
         context["topic"] = Topic.objects.filter(id=pk).first()
         
         return render(request, "bbs/single.html", context)
-     
+
+class BbsDeleteView(View):
+    def post(self, request, pk, *args, **kwargs):
+        topic = Topic.objects.filter(id=pk).first()
+        topic.delete()
+        
+        # 削除完了のメッセージを表示する 
+        messages.info(request, "コメントを削除しました。")
+        
+        return redirect("bbs:bbs")
+    
+class BbsEditView(View):
+    def get(self, request, pk, *args, **kwargs):
+        context = {}
+        context["topic"] = Topic.objects.filter(id=pk).first()
+        
+        return render(request,"bbs/edit.html", context) 
+        
+    def post(self, request, pk, *args, **keargs):
+        
+        topic = Topic.objects.filter(id=pk).first()
+        
+        form = TopicForm(request.POST,instance=topic)
+        
+        if not form.is_valid():
+            print(form.errors)
+            
+        form.save()
+        messages.info(request,"投稿を編集しました。")
+        
+        return redirect("bbs:bbs")
+    
 bbs   = BbsView.as_view()
 single = SingleView.as_view()
+delete = BbsDeleteView.as_view()
+edit = BbsEditView.as_view()

@@ -18,7 +18,9 @@ class Topic(models.Model):
     # 1.その場限りのdefault値を設定する
     # 2.migarationを中断してdefault値を設定する
     
-    dt = models.DateTimeField(verbose_name="投稿日時", default=timezone.now)
+    dt = models.DateTimeField(verbose_name="投稿日時", auto_now=True)
+
+    name = models.CharField(verbose_name="名前", max_length=20)
     
     def __str__(self):
         return self.comment
