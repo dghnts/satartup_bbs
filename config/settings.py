@@ -30,9 +30,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
-    'top.apps.TopConfig',
-    'upload.apps.UploadConfig', 
+INSTALLED_APPS = [ 
     'bbs.apps.BbsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,6 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'bbs.templatetags.param_change'
 ]
 
 MIDDLEWARE = [
@@ -50,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #"allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -65,6 +69,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'bbs.custom_context.links',
+                #'django.template.context_processors.request',
             ],
         },
     },
@@ -130,5 +136,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-import sys,os
-sys.path.insert(0, os.path.join(BASE_DIR, 'app'))
+#import sys,os
+#sys.path.insert(0, os.path.join(BASE_DIR, 'app'))
+
+LOGIN_REDIRECT_URL = "/" 
+LOGOUT_REDIRECT_URL = "/accounts/login/"

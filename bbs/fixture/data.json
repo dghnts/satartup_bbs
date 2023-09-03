@@ -1,0 +1,4 @@
+[{"model": "bbs.category", "pk": 1, "fields": {"name": "テスト"}},
+ {"model": "bbs.category", "pk": 3, "fields": {"name": "テスト2"}},
+ {"model": "bbs.topic", "pk": 2, "fields": {"category": 3, "comment": "こんにちは", "dt": "2023-09-02T00:22:05.478Z", "name": ""}}
+]
