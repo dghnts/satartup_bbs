@@ -1,8 +1,8 @@
 {% extends './base.html' %}
 
-{% block page_title %}編集ページ{% endblock %}
+{% block page_title %}簡易掲示板{% endblock %}
 {% block header_link %}{%url "bbs:index" %}{% endblock %}
-{% block header_title %}編集{% endblock %}
+{% block header_title %}簡易掲示板{% endblock %}
 
 <!-- ヘッダーの右側に表示させたいものを設定-->
 {% block header_right_content %}{% endblock %}
@@ -16,9 +16,4 @@
 {% endblock %}
 
 {% block main %}
-    <form action="{% url 'bbs:edit' topic.id %}" method="POST">
-        {% csrf_token %}
-        <textarea class="form-control" name="comment">{{ topic.comment }}</textarea>
-        <input type="submit" value="送信">
-    </form>
-{% endblock  %}
+{% endblock %}

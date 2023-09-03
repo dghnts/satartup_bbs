@@ -1,14 +1,22 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-	<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>画像アップロードのテスト</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-</head>
-<body>
+{% extends "./base.html" %}
 
-    <h1 class="bg-primary text-center text-white">画像アップロードのテスト</h1>
+{% block extra_head %}
+{% endblock %}
+
+{% block page_title %}投稿用ページ{% endblock %}
+{% block header_link %}{% url 'bbs:bbs' %}{% endblock %}
+{% block header_title %}
+画像のアップロード
+{% endblock %}
+
+<!-- ヘッダーの右側に表示させたいものを設定-->
+{% block header_right_content %}{% endblock %}
+
+<!-- 左サイドバーの中に入れたいものをかく-->
+{% block slidebar_content %}
+{% endblock %}
+
+{% block main %}   
     
     <main class="container">
 
@@ -20,7 +28,7 @@
             {% endfor %}
         </ul>
         
-        <p><a href="{% url 'upload:document' %}">ファイルのアップロードはこちら</a></p>
+        <p><a href="{% url 'bbs:document' %}">ファイルのアップロードはこちら</a></p>
 
         <form method="POST" enctype="multipart/form-data" class="bg-secondary text-light p-2">
             {% csrf_token %}
@@ -51,8 +59,4 @@
                 <img class="img-fluid" src="{{ album.photo.url }}" alt="投稿された画像">
             </div>
         {% endfor %}
-                
-    </main>
-
-</body>
-</html>
+{% endblock%}
