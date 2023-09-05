@@ -1,5 +1,9 @@
 {% extends 'common/l_sidebar.html' %}
 
+{% block page_title %}{{ uesr }}のページ{% endblock %}
+{% block header_link %}{%url "bbs:index" %}{% endblock %}
+{% block header_title %}{{user}}のページ{% endblock %}
+
 <!-- ヘッダーの右側に表示させたいものを設定-->
 {% block header_right_content %}
 {% endblock %}
@@ -7,5 +11,8 @@
 
 <!-- 左サイドバーの中に入れたいものをかく-->
 {% block sidebar_content %}
+{% endblock %}
+
+{% block main %}
 
 {% endblock %}

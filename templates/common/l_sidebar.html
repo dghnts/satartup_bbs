@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -29,11 +29,37 @@
             <div class="header_right_content">
             {% block header_right_content %}
             {% endblock %}
+            {% if user.is_active %}
+                <div class="px-1">
+                    <a href="">{{ user }}</a>
+                </div>
+                    <form method="post" action="{% url 'account_logout' %}">
+                        {% csrf_token %}
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                        {% endif %}
+                        <button type="submit">{% trans 'Sign Out' %}</button>
+                    </form>
+            {% else %}
+                <form class="login" method="POST" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    <button class="primaryAction" type="submit">{% trans "Sign In" %}</button>
+                </form>
+            {% endif %}
             </div>
         </div>
 
         <div class="l_sidebar_menu">
             {% block sidebar_content %}{% endblock %}
+            {% for link in links %}
+                <div>
+                    <a href="{{ link.link}}">{{link.name}}</a>
+                </div>
+            {% endfor %}
         </div>
 
         <label class="l_sidebar_closer" for="l_sidebar"></label>
