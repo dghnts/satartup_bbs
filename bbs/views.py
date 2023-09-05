@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 
 from .models import Category,Topic,PhotoList,DocumentList
@@ -19,7 +20,7 @@ class IndexView(View):
 index = IndexView.as_view()
 
 #投稿用ページ
-class BbsView(View):
+class BbsView(LoginRequiredMixin,View):
 
     def get(self, request, *args, **kwargs):
         
@@ -98,7 +99,7 @@ class BbsView(View):
 bbs = BbsView.as_view()
 
 # 個別ページ
-class SingleView(View):
+class SingleView(LoginRequiredMixin,View):
     def get(self, request, pk, *args, **kwargs):
         context = {}
         
@@ -111,7 +112,7 @@ single = SingleView.as_view()
 
 
 # 削除・編集用ビュー
-class BbsDeleteView(View):
+class BbsDeleteView(LoginRequiredMixin,View):
     def post(self, request, pk, *args, **kwargs):
         topic = Topic.objects.filter(id=pk).first()
         topic.delete()
@@ -121,7 +122,7 @@ class BbsDeleteView(View):
         
         return redirect("bbs:bbs")
 
-class BbsEditView(View):
+class BbsEditView(LoginRequiredMixin,View):
     def get(self, request, pk, *args, **kwargs):
         context = {}
         context["topic"] = Topic.objects.filter(id=pk).first()
@@ -150,7 +151,7 @@ edit = BbsEditView.as_view()
 
 ALLOWED_MIME = ["application/pdf"]
 
-class AlbumView(View):
+class AlbumView(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         context = {}
         context["albums"] = PhotoList.objects.all()
@@ -180,7 +181,7 @@ class AlbumView(View):
         
         return redirect("bbs:album")     
 
-class DocumentView(View):
+class DocumentView(LoginRequiredMixin,View):
 
     def get(self, request, *args, **kwargs):
 
@@ -228,7 +229,7 @@ class DocumentView(View):
 album = AlbumView.as_view()
 document = DocumentView.as_view()
 
-class CalendarView(View):
+class CalendarView(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         return render(request, "bbs/calendar.html")
 

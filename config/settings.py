@@ -38,11 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'bbs.templatetags.param_change'
+    'django.contrib.sites', # ←追加
+    'allauth', # ←追加
+    'allauth.account', # ←追加
+    'allauth.socialaccount', # ←追加
+    'bbs.templatetags.param_change',
+    'users.apps.UsersConfig',
 ]
 
 MIDDLEWARE = [
@@ -53,7 +54,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #"allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -70,7 +70,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'bbs.custom_context.links',
-                #'django.template.context_processors.request',
             ],
         },
     },
@@ -139,5 +138,10 @@ MEDIA_ROOT = BASE_DIR / "media"
 #import sys,os
 #sys.path.insert(0, os.path.join(BASE_DIR, 'app'))
 
-LOGIN_REDIRECT_URL = "/" 
-LOGOUT_REDIRECT_URL = "/accounts/login/"
+SITE_ID = 1
+#django-allauthログイン時とログアウト時のリダイレクトURL
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+
+AUTH_USER_MODEL = 'users.CustomUser'
+ACCOUNT_FORMS   = { "signup":"users.forms.SignupForm"}

@@ -1,17 +1,17 @@
-{% extends './base.html' %}
+{% extends 'common/l_sidebar.html' %}
 
 {% block page_title %}簡易掲示板{% endblock %}
 {% block header_link %}{%url "bbs:index" %}{% endblock %}
 {% block header_title %}簡易掲示板{% endblock %}
 
 <!-- ヘッダーの右側に表示させたいものを設定-->
-{% block header_right_content %}{% endblock %}
+{% block header_right_content %}
+{% endblock %}
 
 <!-- 左サイドバーの中に入れたいものをかく-->
 {% block slidebar_content %}
-{% for topic in topics %}
-{% endfor %}
 {% endblock %}
+
 {% block extra_head %}
 {% endblock %}
 
